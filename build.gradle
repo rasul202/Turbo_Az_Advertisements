@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.2'
+    id 'org.springframework.boot' version '3.2.2'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -17,16 +17,38 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('springCloudVersion', "2023.0.0")
+    set('mapstructVersion',"1.5.3.Final")
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     implementation "org.jsoup:jsoup:1.16.1"
-    
+
+    implementation 'org.telegram:telegrambots:3.5'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"  //you must add mapstruct after lombok dependency
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 tasks.named('test') {

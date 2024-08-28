@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: creating-urls-table
+      author: Rasul Tagisoy
+      changes:
+        - createTable:
+            tableName: urls
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: url
+                  type: text
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: add-url-id-column-to-car-advertisements-table
+      author: Rasul
+      changes:
+        - addColumn:
+            tableName: car_advertisements
+            columns:
+              - column:
+                  name: url_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+
+  - changeSet:
+      id: add-foreign-key-constraint
+      author: Rasul
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: car_advertisements
+            baseColumnNames: url_id
+            referencedTableName: urls
+            referencedColumnNames: id
+            constraintName: fk_urls_id
+
+  - changeSet:
+      id: add-status-column-to-urls-table
+      author: Rasul
+      changes:
+        - addColumn:
+            tableName: urls
+            columns:
+              - column:
+                  name: status
+                  type: int
+                  constraints:
+                    nullable: true

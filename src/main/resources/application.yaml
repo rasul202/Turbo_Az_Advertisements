@@ -1,0 +1,24 @@
+urls:
+  telegram_bot: https://api.telegram.org/
+
+
+telegram_bot:
+  chat_id: 1105077770
+  token: 6941707409:AAHKi_XX2I61Rp7oDUaG2kEJgMcVdgoBRKE
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5436/postgres #postgres is DB_name
+    username: postgres
+    password: mysecretpassword
+  jpa:
+    properties:
+      hibernate:
+        temp:
+          :use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    show-sql: true #it will help us to see the sql queries in jpa methods
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml #here we give the location of changelog file that store the location of the changesets
